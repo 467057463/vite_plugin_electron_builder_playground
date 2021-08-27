@@ -2,12 +2,11 @@ import { session, protocol } from 'electron'
 import * as path from 'path'
 import { readFile } from 'fs'
 import { URL } from 'url'
-import log from 'electron-log';
 
-export default function(scheme: string, partit: string | undefined): void {
+export default function(scheme, partit) {
   let customeProtocol;
   if(partit){
-    customeProtocol = session.fromPartition(partit as string).protocol;
+    customeProtocol = session.fromPartition(partit).protocol;
   } else {
     customeProtocol = protocol
   }

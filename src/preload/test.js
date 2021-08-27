@@ -1,5 +1,3 @@
-// // import dayjs from "dayjs";
-
 import path from 'path';
 import fs from 'fs';
 const fileLocation = path.join(__static, 'static', 'test.txt')

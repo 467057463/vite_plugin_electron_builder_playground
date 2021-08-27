@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [
     vue(), 
     viteElectron({
-      mainProcessFile: 'src/background.ts',
+      mainProcessFile: 'src/background.js',
       preloadDir: 'src/preload',
       builderOptions: {
         appId: 'com.example.viteElectronTest',

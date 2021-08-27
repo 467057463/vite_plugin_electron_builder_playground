@@ -1,67 +1,102 @@
-import { app, BrowserWindow, protocol, Notification, session } from "electron";
+import { 
+  app, 
+  BrowserWindow, 
+  protocol, 
+  Notification, 
+  session 
+} from "electron";
 import dayjs from "dayjs";
-// import createProtocol from '../vite-plugin-electron/createProtocol';
-import createProtocol from './createProtocol';
-import fs from 'fs';
 import path from 'path';
-const fileLocation = path.join(__static, 'static', 'test.txt')
-// const fileLocation = path.join(process.cwd(), 'public', 'test.txt')
-const fileContents = fs.readFileSync(fileLocation, 'utf8')
-console.log(fileContents)
+import os from 'os';
+// import log from 'electron-log';
+import createProtocol from './electron/createProtocol';
+// import installExtension, { VUEJS3_DEVTOOLS } from 'electron-devtools-installer';
 
-function showNotification () {
-  new Notification({ 
-    title: 'test abcdefg', body: fileContents 
-  }).show()
-}
 
-protocol.registerSchemesAsPrivileged(
-  [
-    { 
-      scheme: 'app', 
-      privileges: { 
-        secure: true, 
-        standard: true 
-      } 
-    }
-  ]
-);
-console.log(__dirname, process.cwd())
-function createWindow () {
-  const win = new BrowserWindow({
-    width: 700,
-    height: 1000,
-    title: process.env.VITE_NAME + dayjs() + fileContents,
+protocol.registerSchemesAsPrivileged([{ scheme: 'app', privileges: { secure: true, standard: true } }]);
+
+const partition = 'persist:app_session'
+let win;
+async function createWindow () {
+  win = new BrowserWindow({
+    width: 900,
+    height: 600,
+    frame: false,
+    show: false,
+    title: import.meta.env.VITE_NAME + dayjs(),
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
       enableRemoteModule: true,
-      preload: path.join(__dirname, 'preload/test', 'test.js')
+      webSecurity: false,
+      preload: path.join(__preload, 'test.js'),
+      partition: partition,
+      webviewTag: true,
     }
   })
-  const ses = win
-  createProtocol('app');  
-  if(process.env.DEV_SERVER_URL){
-    win.loadURL(process.env.DEV_SERVER_URL)
+  // const ses = session.fromPartition('persist:test_webview_session');
+  // ses.setProxy({
+  //   proxyRules:"socks5://127.0.0.1:1080"
+  // })
+  createProtocol('app', partition);  
+  if(import.meta.env.DEV_SERVER_URL){
+    win.loadURL(import.meta.env.DEV_SERVER_URL)
+    win.webContents.openDevTools({mode: 'bottom'})
   } else {
     win.loadURL('app://./index.html')
-    // win.loadURL('http://www.baidu.com')
+  }
+
+  // 加载完再显示窗口
+  // 以免页面空白
+  win.once('ready-to-show', () => {
+    win.show();
+  });
+}
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
+
+app.on('activate', () => {
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow();
+  } else {
+    if (win) win.show();
+  }
+});
+
+app.whenReady().then(async () => {
+  if(import.meta.env.DEV){
+    // 加载本地插件
+    const ses = session.fromPartition(partition);
+    const vueDevToolsPath = path.join(
+      os.homedir(),
+      '/AppData/Local/Google/Chrome/User Data/Default/Extensions/ljjemllljcmogpfapbkkighbhhppjdbg/6.0.0.15_0'
+    )
+    await ses.loadExtension(vueDevToolsPath);
+    
+    // 自动下载插件
+    // installExtension(VUEJS3_DEVTOOLS)
+    //   .then((name) => console.log(`Added Extension:  ${name}`))
+    //   .catch((err) => console.log('An error occurred: ', err));
+  }
+  createWindow()
+})
+
+// Exit cleanly on request from parent process in development mode.
+if (import.meta.env.DEV) {
+  if (process.platform === 'win32') {
+    process.on('message', (data) => {
+      if (data === 'graceful-exit') {
+        app.quit();
+      }
+    });
+  } else {
+    process.on('SIGTERM', () => {
+      app.quit();
+    });
   }
 }
 
-app.whenReady().then(() => {
-  createWindow()
-  app.on('activate', function () {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
-  })
-
-})
-.then(() => {
-  showNotification()
-})
-
-app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') app.quit()
-})
