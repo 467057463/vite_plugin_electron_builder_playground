@@ -21,7 +21,7 @@ async function createWindow () {
   win = new BrowserWindow({
     width: 900,
     height: 600,
-    frame: false,
+    // frame: false,
     show: false,
     title: import.meta.env.VITE_NAME + dayjs(),
     webPreferences: {
