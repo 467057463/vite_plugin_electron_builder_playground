@@ -12,7 +12,7 @@ import { ref } from 'vue';
 import Message from '../components/Message.vue';
 const count = ref(0);
 
-function test($evnet){
+function test($evnet: string){
   console.log('close', $evnet)
 }
 </script>
