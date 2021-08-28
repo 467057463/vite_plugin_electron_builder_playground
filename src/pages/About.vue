@@ -1,3 +1,14 @@
 <template lang="pug">
-b about
+el-button(
+  type="primary"
+  @click="increment"
+) {{store.state.count}}
 </template>
+
+<script setup lang="ts">
+import { useStore } from 'vuex'
+const store = useStore()
+function increment(){
+  store.commit('increment')
+}
+</script>
