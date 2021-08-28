@@ -11,8 +11,8 @@ export default defineConfig({
       mainProcessFile: 'src/background.js',
       preloadDir: 'src/preload',
       builderOptions: {
-        appId: 'com.example.viteElectronTest',
-        productName: 'vite electron 测试项目',
+        appId: 'com.example.shopeeChart',
+        productName: 'shopee Chart',
         copyright: 'Copyright © 2021',
         directories: {
           output: 'dist_application',
