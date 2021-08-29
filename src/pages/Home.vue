@@ -2,7 +2,7 @@
 el-button(@click="count++") {{count}}
 Message(
   title="titleabcdefg"
-  @test="test"
+  @close="close"
 )
   b hello component
 </template>
@@ -12,7 +12,7 @@ import { ref } from 'vue';
 import Message from '../components/Message.vue';
 const count = ref(0);
 
-function test($evnet: string){
+function close($evnet: string){
   console.log('close', $evnet)
 }
 </script>
