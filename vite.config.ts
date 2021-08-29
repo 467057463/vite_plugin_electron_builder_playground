@@ -12,7 +12,7 @@ export default defineConfig({
       preloadDir: 'src/preload',
       builderOptions: {
         appId: 'com.example.shopeeChart',
-        productName: 'shopeeChart',
+        productName: 'shopee Chart',
         copyright: 'Copyright © 2021',
         directories: {
           output: 'dist_application',
@@ -31,14 +31,14 @@ export default defineConfig({
           ],
           artifactName: '${productName} Setup ${version}.${ext}',
         },
-        // nsis: {
-        //   oneClick: false,
-        //   language: '2052',
-        //   perMachine: true,
-        //   allowToChangeInstallationDirectory: true,
-        //   createDesktopShortcut: "always",
-        //   include: "build/installer.nsh"
-        // },
+        nsis: {
+          oneClick: false,
+          language: '2052',
+          perMachine: true,
+          allowToChangeInstallationDirectory: true,
+          createDesktopShortcut: "always",
+          include: "build/installer.nsh"
+        },
       }
     })
   ]
