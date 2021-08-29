@@ -12,7 +12,7 @@ export default defineConfig({
       preloadDir: 'src/preload',
       builderOptions: {
         appId: 'com.example.shopeeChart',
-        productName: 'shopee Chart',
+        productName: 'shopeeChart',
         copyright: 'Copyright © 2021',
         directories: {
           output: 'dist_application',
