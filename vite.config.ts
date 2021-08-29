@@ -19,26 +19,26 @@ export default defineConfig({
           buildResources: 'build',
           app: 'dist'
         },
-        // files: ['**'],
-        // extends: null,
-        // asar: true,
-        // win: {
-        //   target: [
-        //     {
-        //       target: 'nsis',
-        //       arch: ['x64'],
-        //     },
-        //   ],
-        //   artifactName: '${productName} Setup ${version}.${ext}',
-        // },
-        // nsis: {
-        //   oneClick: false,
-        //   language: '2052',
-        //   perMachine: true,
-        //   allowToChangeInstallationDirectory: true,
-        //   createDesktopShortcut: "always",
-        //   include: "build/installer.nsh"
-        // },
+        files: ['**'],
+        extends: null,
+        asar: true,
+        win: {
+          target: [
+            {
+              target: 'nsis',
+              arch: ['x64'],
+            },
+          ],
+          artifactName: '${productName} Setup ${version}.${ext}',
+        },
+        nsis: {
+          oneClick: false,
+          language: '2052',
+          perMachine: true,
+          allowToChangeInstallationDirectory: true,
+          createDesktopShortcut: "always",
+          include: "build/installer.nsh"
+        },
       }
     })
   ]
