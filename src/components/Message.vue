@@ -3,10 +3,14 @@
   .slot
     slot
   span {{props.title}}
-  p {{props.content}}
+  p(@click="changeCount(10)") {{props.content}}
+  p {{ count }}
+  p {{ countTow}}
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue';
+import composables from './composables.js';
 
 interface Props {
   title: string,
@@ -22,7 +26,13 @@ const emit = defineEmits<{
   (e: 'close', params: string): void
 }>();
 
-
+console.log(this)
 console.log(props)
 console.log(emit)
+
+onMounted(() => {
+  console.log('ssss')
+})
+
+const { count, countTow, changeCount } = composables()
 </script>
