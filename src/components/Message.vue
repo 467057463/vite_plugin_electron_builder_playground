@@ -10,6 +10,7 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue';
+// @ts-ignore
 import composables from './composables.js';
 
 interface Props {
