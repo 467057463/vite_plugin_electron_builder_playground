@@ -14,11 +14,11 @@ export default defineConfig({
         appId: 'shopeeChart',
         // productName: 'shopeeChart',
         // copyright: 'Copyright © 2021',
-        // directories: {
+        directories: {
         //   output: 'dist_application',
         //   buildResources: 'build',
-        //   app: 'dist'
-        // },
+          app: 'dist'
+        },
         // files: ['**'],
         // extends: null,
         // asar: true,
