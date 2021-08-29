@@ -15,8 +15,8 @@ export default defineConfig({
         // productName: 'shopeeChart',
         // copyright: 'Copyright © 2021',
         directories: {
-        //   output: 'dist_application',
-        //   buildResources: 'build',
+          output: 'dist_application',
+          buildResources: 'build',
           app: 'dist'
         },
         // files: ['**'],
