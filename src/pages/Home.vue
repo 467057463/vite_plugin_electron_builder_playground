@@ -1,5 +1,5 @@
 <template lang="pug">
-el-button(@click="count++") {{count}}
+el-button(@click="state.count++") {{state.count}}
 Message(
   title="titleabcdefg"
   @close="close"
@@ -8,11 +8,16 @@ Message(
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import Message from '../components/Message.vue';
 const count = ref(0);
 
 function close($evnet: string){
   console.log('close', $evnet)
 }
+
+const state = reactive({
+  count: 0
+})
+console.log(state)
 </script>
