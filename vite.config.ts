@@ -31,14 +31,33 @@ export default defineConfig({
           ],
           artifactName: '${productName} Setup ${version}.${ext}',
         },
-        // nsis: {
-        //   oneClick: false,
-        //   language: '2052',
-        //   perMachine: true,
-        //   allowToChangeInstallationDirectory: true,
-        //   createDesktopShortcut: "always",
-        //   include: "build/installer.nsh"
-        // },
+        nsis: {
+          oneClick: false,
+          language: '2052',
+          perMachine: true,
+          allowToChangeInstallationDirectory: true,
+          createDesktopShortcut: "always",
+          include: "build/installer.nsh"
+        },
+        mac: {
+          target: 'dmg',
+          artifactName: '${productName} Setup ${version}.${ext}',
+        },
+        dmg: {
+          contents: [
+            {
+              x: 110,
+              y: 150,
+            },
+            {
+              x: 400,
+              y: 150,
+              type: 'link',
+              path: '/Applications',
+            },
+          ],
+          artifactName: '${productName} Setup ${version}.${ext}',
+        },
       }
     })
   ]
